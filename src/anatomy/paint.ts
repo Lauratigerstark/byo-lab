@@ -11,7 +11,7 @@ export type PaintedAnatomy = {
   badges: HTMLElement[]
 }
 
-const signal = (percent: number) => `color-mix(in oklch, var(--signal) ${percent}%, transparent)`
+const signal = (percent: number) => `color-mix(in oklab, var(--signal) ${percent}%, transparent)`
 
 const layer = (parent: HTMLElement, name: string) => {
   const node = document.createElement('div')

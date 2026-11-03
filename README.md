@@ -8,6 +8,7 @@ Build your own lab. A place to build UI components with your coding agent, judge
 - **Workbench** for each component, with an anatomy view (skeleton and live measurements) for layout breakdowns.
 - **Films** that drive the real component, not a recording: a storyboard of clicks and tweens, rendered frame by frame to mp4 in light and dark.
 - **Taste that compounds.** Every toss asks why, and the reason becomes a rule your agent reads next time.
+- **Living design system** at `#/system`, read straight from your tokens and rules, with the history behind them at `#/designevolution`.
 - **DialKit built in.** Tune a spring or a radius by hand in the workbench, then hand the numbers back to your agent.
 
 This is a blank canvas. It starts from my opinions (a grid, a theme, a few taste rules) so it works out of the box, but it's meant to become yours. No skill gives you taste. You are the skill.
@@ -47,6 +48,7 @@ pnpm lab new <slug> [--kind component|explainer|breakdown] [--name ".."] [--idea
 pnpm lab list
 pnpm lab keep <slug>
 pnpm lab toss <slug> --reason "spacing is too loose"
+pnpm lab log tokens --what "softened the signal blue" --reason "it fought the content"
 pnpm lab grid <slug>                      # spacing, radius, and type limits from GRID.md
 pnpm lab check <film>                     # film is frame-exact
 pnpm lab still <film> <seconds>
@@ -100,7 +102,7 @@ The files that hold it all:
 - **`GRID.md`** sets the spacing, radius, and type limits that `pnpm lab grid` checks.
 - **`src/index.css`** holds the theme tokens, elevation scale, radii (`--corner-*`), and text sizes (`--type-*`). Change the look there.
 - **`.agents/skills/`** teaches your agent the workflows. Edit them like any other file.
-- **`LEDGER.md`** appears after your first keep or toss and records every verdict.
+- **`LEDGER.md`** appears after your first keep or toss and records every verdict and design change. A commit that changes `src/index.css`, `TASTE.md`, or `GRID.md` needs a line here, written with `pnpm lab log`.
 - **`CHANGELOG.md`** is byolab's own release notes. Leave it as is so updates know where you're coming from.
 
 ## Layout

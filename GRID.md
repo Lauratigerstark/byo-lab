@@ -14,7 +14,7 @@ Every padding, gap, margin, inset, control height and fixed size is a multiple o
 
 The outermost surface of a component has a 24px radius and a 24px inset. Nested radii derive from it (inner = outer − inset) or are picked from the control scale (8 for fields and buttons, 4 for chips and keycaps) once the gap reaches 24.
 
-These are tokens: `rounded-surface` (24), `rounded-control` (8), `rounded-chip` (4). The values live in `--corner-*` in `src/index.css`. Changing this file changes what `pnpm lab grid` expects, so change both together.
+These are tokens: `rounded-surface` (24), `rounded-control` (8), `rounded-chip` (4). The values live in `--corner-*` in `src/index.css`, and `pnpm lab grid` reads the outer radius from `--corner-surface`. Change this file and the token together.
 
 ## 3. Safe space and content areas
 

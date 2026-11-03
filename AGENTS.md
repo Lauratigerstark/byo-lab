@@ -8,6 +8,8 @@ A design lab you build with an agent. It holds:
 - **Drafts** (`src/drafts/<slug>`): new work waiting for a keep or toss. They show under "To judge" in the gallery.
 - **Films** (`film.ts` next to a specimen, or `src/films/<slug>/storyboard.ts`): code-defined videos that drive the real component, rendered frame by frame to mp4.
 - **Taste** (`TASTE.md`, `GRID.md`): the owner's rules. Every toss reason and crit note becomes one.
+- **Design system** (`#/system`): the current tokens and rules, read live from `src/index.css`, `TASTE.md`, and `GRID.md`. It has no source of its own, so there is nothing to update by hand.
+- **Design evolution** (`#/designevolution`): the history in `LEDGER.md`, with every design change, keep, and toss.
 
 </context>
 
@@ -17,6 +19,7 @@ A design lab you build with an agent. It holds:
 - Create work with `pnpm lab new <slug>`. MUST NOT hand-create a draft folder: the command writes the registry entry, component, and film in the shape the lab and renderer expect.
 - New work starts as a draft. Only the owner keeps or tosses it, in the gallery or by asking you to run `pnpm lab keep` / `pnpm lab toss`. MUST NOT judge for them.
 - When the owner gives a crit note, fix it, then add one line to `TASTE.md` as a rule with its reason. A note that stays in the conversation is lost.
+- When a change touches `src/index.css`, `TASTE.md`, or `GRID.md`, run `pnpm lab log <tokens|taste|grid> --what ".." --reason ".."` and stage `LEDGER.md` with it. The pre-commit hook blocks the commit otherwise, because a decision without its why can't be reviewed later. Other commits need no line.
 - Use `--json` when you need to read a command's result.
 - `pnpm lab grid <slug>` MUST pass before handing work over.
 - Films MUST stay deterministic: state comes from `useFilmFrame()` and the timeline, never `Math.random`, timers, or wall-clock time. `pnpm lab check <film>` MUST pass before a render is called done.
@@ -47,6 +50,7 @@ pnpm lab new <slug> [--kind component|explainer|breakdown] [--name ".."] [--idea
 pnpm lab list [--json]
 pnpm lab keep <slug>
 pnpm lab toss <slug> --reason "one line"
+pnpm lab log <tokens|taste|grid> --what ".." --reason ".."
 pnpm lab grid <slug>
 pnpm lab check <film> [--theme light|dark]
 pnpm lab still <film> <seconds> [--theme light|dark]

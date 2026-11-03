@@ -59,6 +59,7 @@ try {
       return r > 0 && r * 2 < Math.min(el.offsetWidth, el.offsetHeight) && getComputedStyle(el).boxShadow !== 'none'
     })
     return {
+      corner: px(getComputedStyle(document.documentElement).getPropertyValue('--corner-surface')),
       outerRadius: surface ? px(getComputedStyle(surface).borderTopLeftRadius) : 0,
       bleed: !surface || surface !== host && host.offsetWidth > surface.offsetWidth + 64,
       off,
@@ -78,7 +79,7 @@ try {
       console.log(`${ok ? 'ok  ' : 'FAIL'} ${text}`)
     }
     if (report.bleed) console.log(`note full-bleed specimen; outermost surface radius ${report.outerRadius}px`)
-    line(report.bleed ? report.outerRadius === 0 || report.outerRadius === 24 || report.outerRadius <= 16 : report.outerRadius === 24, `outer radius ${report.outerRadius}px (want 24)`)
+    line(report.bleed ? report.outerRadius === 0 || report.outerRadius === report.corner || report.outerRadius <= 16 : report.outerRadius === report.corner, `outer radius ${report.outerRadius}px (want ${report.corner})`)
     line(Object.keys(report.sizes).length <= 3, `${Object.keys(report.sizes).length} font sizes: ${Object.entries(report.sizes).map(([k, v]) => `${k}×${v}`).join(', ')}`)
     line(Object.keys(report.weights).length <= 3, `${Object.keys(report.weights).length} font weights: ${Object.entries(report.weights).map(([k, v]) => `${k}×${v}`).join(', ')}`)
     line(report.families.length <= 2, `${report.families.length} font families: ${report.families.join(', ')}`)

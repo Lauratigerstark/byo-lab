@@ -2,6 +2,7 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync, renameSync, writeF
 import { resolve } from 'node:path'
 
 export const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+export const DESIGN_FILES = { 'src/index.css': 'tokens', 'TASTE.md': 'taste', 'GRID.md': 'grid' }
 const TOSS_HEADING = '## Toss notes, not yet rules'
 
 const today = () => new Date().toLocaleDateString('en-CA')
@@ -27,8 +28,18 @@ export function readEntry(dir) {
 
 function ledger(root, line) {
   const path = resolve(root, 'LEDGER.md')
-  if (!existsSync(path)) writeFileSync(path, '# Ledger\n\nEvery keep and toss, newest last. Agents read this before proposing ideas.\n\n')
+  if (!existsSync(path)) writeFileSync(path, '# Ledger\n\nEvery keep, toss, and design change, newest last. Agents read this before proposing ideas.\n\n')
   appendFileSync(path, `${line}\n`)
+}
+
+export function logChange(root, area, what, reason) {
+  const areas = Object.values(DESIGN_FILES)
+  if (!areas.includes(area)) throw Object.assign(new Error(`Area must be one of ${areas.join(', ')}`), { status: 400 })
+  const change = what?.trim().replace(/\.+$/, '')
+  const why = reason?.trim().replace(/\.+$/, '')
+  if (!change || !why) throw Object.assign(new Error('Say what changed and why, each in one line.'), { status: 400 })
+  ledger(root, `- ${today()} changed \`${area}\`: ${change}. Why: ${why}.`)
+  return { area, what: change, why }
 }
 
 function draftOf(root, slug) {

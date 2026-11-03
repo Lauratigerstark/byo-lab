@@ -1,0 +1,6 @@
+#!/bin/sh
+if ! command -v node >/dev/null 2>&1; then
+  echo "pre-commit: node not found, skipping the design check" >&2
+  exit 0
+fi
+exec node scripts/design-check.mjs

@@ -1,9 +1,11 @@
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { findSpecimen } from '@/specimens'
+import { EvolutionPage } from '@/lab/evolution-page'
 import { Gallery } from '@/lab/gallery'
 import { useEffect } from 'react'
 import { isTypingTarget, useRoute, useTheme } from '@/lab/hooks'
 import { SpecimenPage } from '@/lab/specimen-page'
+import { SystemPage } from '@/lab/system-page'
 
 export default function App() {
   const route = useRoute()
@@ -18,5 +20,6 @@ export default function App() {
     return () => removeEventListener('keydown', onKey)
   }, [toggle])
   const specimen = route.page === 'specimen' ? findSpecimen(route.slug) : undefined
-  return <TooltipProvider delayDuration={400}>{specimen ? <SpecimenPage specimen={specimen} /> : <Gallery />}</TooltipProvider>
+  const page = specimen ? <SpecimenPage specimen={specimen} /> : route.page === 'system' ? <SystemPage /> : route.page === 'evolution' ? <EvolutionPage /> : <Gallery />
+  return <TooltipProvider delayDuration={400}>{page}</TooltipProvider>
 }

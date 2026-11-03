@@ -255,7 +255,7 @@
     @apply bg-canvas text-foreground;
   }
   ::selection {
-    background: color-mix(in oklch, var(--signal) 22%, transparent);
+    background: color-mix(in oklab, var(--signal) 22%, transparent);
   }
 }
 
