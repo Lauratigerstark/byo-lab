@@ -32,14 +32,19 @@ function ledger(root, line) {
   appendFileSync(path, `${line}\n`)
 }
 
-export function logChange(root, area, what, reason) {
+export function checkChange(area, what, reason) {
   const areas = Object.values(DESIGN_FILES)
   if (!areas.includes(area)) throw Object.assign(new Error(`Area must be one of ${areas.join(', ')}`), { status: 400 })
   const change = what?.trim().replace(/\.+$/, '')
   const why = reason?.trim().replace(/\.+$/, '')
   if (!change || !why) throw Object.assign(new Error('Say what changed and why, each in one line.'), { status: 400 })
-  ledger(root, `- ${today()} changed \`${area}\`: ${change}. Why: ${why}.`)
-  return { area, what: change, why }
+  return { change, why }
+}
+
+export function logChange(root, area, what, reason, shot) {
+  const { change, why } = checkChange(area, what, reason)
+  ledger(root, `- ${today()} changed \`${area}\`: ${change}. Why: ${why}.${shot ? ` ![Gallery after the change](${shot})` : ''}`)
+  return { area, what: change, why, shot }
 }
 
 function draftOf(root, slug) {

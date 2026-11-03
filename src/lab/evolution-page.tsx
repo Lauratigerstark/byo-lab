@@ -51,6 +51,11 @@ function Entry({ entry }: { entry: LedgerEntry }) {
             {detail}
           </p>
         )}
+        {entry.shot && (
+          <a href={entry.shot} target="_blank" rel="noreferrer" className="mt-2 block overflow-hidden rounded-control shadow-raised outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
+            <img src={entry.shot} alt={`The gallery after this ${entry.subject} change`} loading="lazy" className="aspect-[16/10] w-full object-cover object-top" />
+          </a>
+        )}
       </div>
     </li>
   )

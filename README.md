@@ -102,7 +102,7 @@ The files that hold it all:
 - **`GRID.md`** sets the spacing, radius, and type limits that `pnpm lab grid` checks.
 - **`src/index.css`** holds the theme tokens, elevation scale, radii (`--corner-*`), and text sizes (`--type-*`). Change the look there.
 - **`.agents/skills/`** teaches your agent the workflows. Edit them like any other file.
-- **`LEDGER.md`** appears after your first keep or toss and records every verdict and design change. A commit that changes `src/index.css`, `TASTE.md`, or `GRID.md` needs a line here, written with `pnpm lab log`.
+- **`LEDGER.md`** appears after your first keep or toss and records every verdict and design change. A commit that changes `src/index.css`, `TASTE.md`, or `GRID.md` needs a line here, written with `pnpm lab log`. It asks whether to save a screenshot of the gallery to `docs/ledger/`, so the design evolution page can show what the lab looked like after the change. Pass `--shot` or `--no-shot` to skip the question.
 - **`CHANGELOG.md`** is byolab's own release notes. Leave it as is so updates know where you're coming from.
 
 ## Layout

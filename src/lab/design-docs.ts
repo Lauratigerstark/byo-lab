@@ -35,15 +35,19 @@ export function docSections(file: 'TASTE.md' | 'GRID.md') {
   return sections
 }
 
-export type LedgerEntry = { date: string; kind: 'changed' | 'kept' | 'tossed'; subject: string; text: string; why?: string }
+export type LedgerEntry = { date: string; kind: 'changed' | 'kept' | 'tossed'; subject: string; text: string; why?: string; shot?: string }
+
+const shots = import.meta.glob<string>('/docs/ledger/*.png', { query: '?url', import: 'default', eager: true })
 
 export const ledger = (docs['/LEDGER.md'] ?? '')
   .split('\n')
   .flatMap((line): LedgerEntry[] => {
     const match = line.match(/^- (\d{4}-\d{2}-\d{2}) (changed|kept|tossed) `([^`]+)`(?: \([^)]*\))?(?:: (.*))?$/)
     if (!match) return []
-    const [, date, kind, subject, rest = ''] = match
+    const [, date, kind, subject, tail = ''] = match
+    const image = tail.match(/ !\[[^\]]*\]\(([^)]+)\)$/)
+    const rest = image ? tail.slice(0, image.index) : tail
     const [text, why] = rest.split(' Why: ')
-    return [{ date, kind: kind as LedgerEntry['kind'], subject, text, why }]
+    return [{ date, kind: kind as LedgerEntry['kind'], subject, text, why, shot: image ? shots[`/${image[1]}`] : undefined }]
   })
   .reverse()
