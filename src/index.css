@@ -64,12 +64,21 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
+  --radius-md: var(--corner-control);
+  --radius-lg: var(--corner-control);
   --radius-xl: calc(var(--radius) * 1.4);
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-chip: var(--corner-chip);
+  --radius-control: var(--corner-control);
+  --radius-surface: var(--corner-surface);
+
+  --text-xs: var(--type-meta);
+  --text-sm: var(--type-body);
+  --text-meta: var(--type-meta);
+  --text-body: var(--type-body);
+  --text-title: var(--type-title);
 
   --shadow-hairline: var(--elevation-hairline);
   --shadow-raised: var(--elevation-raised);
@@ -86,6 +95,14 @@
 :root {
   --radius: 0.625rem;
   --hairline: 1px;
+
+  --corner-chip: 4px;
+  --corner-control: 8px;
+  --corner-surface: 24px;
+
+  --type-meta: 12px;
+  --type-body: 14px;
+  --type-title: 14px;
 
   --canvas: oklch(0.962 0.0018 70);
   --background: oklch(0.985 0.0012 70);
@@ -170,7 +187,7 @@
   --primary-foreground: oklch(0.145 0 0);
   --secondary: oklch(0.205 0 0);
   --secondary-foreground: var(--foreground);
-  --muted: oklch(0.205 0 0);
+  --muted: oklch(0.25 0 0);
   --muted-foreground: oklch(0.71 0 0);
   --faint: oklch(0.62 0 0);
   --accent: oklch(0.225 0 0);

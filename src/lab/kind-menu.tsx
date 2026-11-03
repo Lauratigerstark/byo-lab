@@ -28,14 +28,14 @@ export function KindMenu({ value, counts, onChange }: { value: KindFilter; count
 
 function MenuRow({ active, label, count, does, make, onSelect }: { active: boolean; label: string; count: number; does?: string; make?: string; onSelect: () => void }) {
   return (
-    <DropdownMenuItem onSelect={onSelect} className="items-start gap-2.5 rounded-[8px] px-2 py-2">
+    <DropdownMenuItem onSelect={onSelect} className="items-start gap-2.5 rounded-control px-2 py-2">
       <span className="grid size-4 shrink-0 place-items-center pt-0.5">{active && <CheckIcon className="size-3.5" />}</span>
       <span className="flex min-w-0 flex-1 flex-col gap-1">
         <span className="flex items-baseline gap-2">
           <span className="text-[13px] font-medium">{label}</span>
           <span className="ml-auto font-mono text-[11px] text-faint tabular">{count}</span>
         </span>
-        {does && <span className="text-pretty text-[12px] leading-[17px] text-muted-foreground">{does}</span>}
+        {does && <span className="text-pretty text-meta leading-[17px] text-muted-foreground">{does}</span>}
         {make && <span className="w-fit rounded-[5px] bg-muted px-1.5 py-px font-mono text-[11px] text-muted-foreground shadow-hairline">{make}</span>}
       </span>
     </DropdownMenuItem>
