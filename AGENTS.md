@@ -21,6 +21,7 @@ A design lab you build with an agent. It holds:
 - `pnpm lab grid <slug>` MUST pass before handing work over.
 - Films MUST stay deterministic: state comes from `useFilmFrame()` and the timeline, never `Math.random`, timers, or wall-clock time. `pnpm lab check <film>` MUST pass before a render is called done.
 - UI uses the shadcn components in `src/components/ui` and the tokens in `src/index.css`. Change the theme there, not per component. Icons come from `lucide-react`.
+- Radii and text sizes MUST use tokens, because a literal won't follow a theme change: `rounded-surface`, `rounded-control`, `rounded-chip`, and `text-title`, `text-body`, `text-meta`. Use a literal only for a value with no token, like a derived nested radius.
 - Read a still after rendering it. "It rendered" is not "it looks right".
 - DialKit (`dialkit`) is installed for live tuning. Use `useDialKit` while values are being tuned, and bake the final numbers into plain constants before a film is called done, because films must be deterministic.
 - The lab's version is `version` in `package.json`; releases and what to do about them are in `CHANGELOG.md`.

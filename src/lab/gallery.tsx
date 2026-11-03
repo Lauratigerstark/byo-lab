@@ -18,19 +18,19 @@ function Tile({ specimen }: { specimen: Specimen }) {
       <a
         href={`#/s/${specimen.slug}`}
         aria-label={`Open ${specimen.name}`}
-        className="absolute inset-0 z-10 rounded-[24px] outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="absolute inset-0 z-10 rounded-surface outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
       />
       <div
         className={cn(
-          'relative flex flex-col rounded-[24px] bg-card p-2 shadow-[var(--rim),var(--elevation-raised)] transition-[scale] duration-150 ease-out group-has-[a:active]/tile:scale-[0.99] motion-reduce:transition-none',
+          'relative flex flex-col rounded-surface bg-card p-2 shadow-[var(--rim),var(--elevation-raised)] transition-[scale] duration-150 ease-out group-has-[a:active]/tile:scale-[0.99] motion-reduce:transition-none',
           '[--rim:inset_0_0_0_1px_var(--border),inset_0_1px_0_oklch(1_0_0/0.8)] dark:[--rim:inset_0_0_0_1px_oklch(1_0_0/0.09),inset_0_1px_0_oklch(1_0_0/0.12)]',
         )}
       >
         <span
           aria-hidden
           className={cn(
-            'pointer-events-none absolute inset-0 z-[1] rounded-[24px] opacity-0 shadow-floating transition-opacity duration-200 group-hover/tile:opacity-100 group-has-[a:focus-visible]/tile:opacity-100 motion-reduce:transition-none',
-            '[box-shadow:var(--elevation-floating),inset_0_0_0_1px_oklch(0.2_0_0/0.18)] dark:[box-shadow:var(--elevation-floating),inset_0_0_0_1px_oklch(1_0_0/0.22),inset_0_1px_0_oklch(1_0_0/0.18)]',
+            'pointer-events-none absolute inset-0 z-[1] rounded-surface opacity-0 shadow-floating transition-opacity duration-200 group-hover/tile:opacity-100 group-has-[a:focus-visible]/tile:opacity-100 motion-reduce:transition-none',
+            '[box-shadow:var(--elevation-floating),inset_0_0_0_1px_oklch(0.2_0_0/0.09)] dark:[box-shadow:var(--elevation-floating),inset_0_0_0_1px_oklch(1_0_0/0.11),inset_0_1px_0_oklch(1_0_0/0.09)]',
             EASE,
           )}
         />
@@ -46,8 +46,8 @@ function Tile({ specimen }: { specimen: Specimen }) {
         </div>
         <div className="flex min-h-12 items-center justify-between gap-2 px-2 pt-2 has-[form]:[&>div:first-child]:hidden">
           <div className="flex min-w-0 flex-col">
-            <span className="truncate text-[14px] font-medium">{specimen.name}</span>
-            <span className="truncate text-[12px] text-muted-foreground">{kinds[specimen.kind].label.replace(/s$/, '')}</span>
+            <span className="truncate text-title font-medium">{specimen.name}</span>
+            <span className="truncate text-meta text-muted-foreground">{kinds[specimen.kind].label.replace(/s$/, '')}</span>
           </div>
           {draft ? (
             <span className="relative z-20 has-[form]:flex-1">
@@ -58,7 +58,7 @@ function Tile({ specimen }: { specimen: Specimen }) {
               <span
                 aria-hidden
                 className={cn(
-                  'col-start-1 row-start-1 flex items-center gap-1 justify-self-end text-[14px] font-medium opacity-0 transition-opacity duration-200 group-hover/tile:opacity-100 group-hover/tile:delay-75 group-has-[a:focus-visible]/tile:opacity-100 motion-reduce:transition-none',
+                  'col-start-1 row-start-1 flex items-center gap-1 justify-self-end text-body font-medium opacity-0 transition-opacity duration-200 group-hover/tile:opacity-100 group-hover/tile:delay-75 group-has-[a:focus-visible]/tile:opacity-100 motion-reduce:transition-none',
                   EASE,
                 )}
               >
@@ -78,8 +78,8 @@ function Group({ title, note, items }: { title: string; note: string; items: Spe
   return (
     <section className="flex flex-col gap-4">
       <div className="flex items-baseline gap-2 px-2">
-        <h2 className="text-[14px] font-medium">{title}</h2>
-        <span className="text-[12px] text-muted-foreground tabular">
+        <h2 className="text-title font-medium">{title}</h2>
+        <span className="text-meta text-muted-foreground tabular">
           {items.length} · {note}
         </span>
       </div>
@@ -94,13 +94,13 @@ function Group({ title, note, items }: { title: string; note: string; items: Spe
 
 function Empty() {
   return (
-    <section className="grid min-h-[480px] place-items-center rounded-[24px] bg-canvas shadow-inset dot-field">
-      <div className="flex w-[400px] flex-col gap-4 rounded-[24px] bg-card p-6 shadow-floating">
+    <section className="grid min-h-[480px] place-items-center rounded-surface bg-canvas shadow-inset dot-field">
+      <div className="flex w-[400px] flex-col gap-4 rounded-surface bg-card p-6 shadow-floating">
         <div className="flex flex-col gap-2">
-          <h2 className="text-[14px] font-medium">Nothing in the lab yet</h2>
-          <p className="text-[14px] text-muted-foreground">Ask your agent for a component. It scaffolds a draft, builds it, and it shows up here to keep or toss.</p>
+          <h2 className="text-title font-medium">Nothing in the lab yet</h2>
+          <p className="text-body text-muted-foreground">Ask your agent for a component. It scaffolds a draft, builds it, and it shows up here to keep or toss.</p>
         </div>
-        <pre className="rounded-[8px] bg-background px-4 py-2 font-mono text-[12px] leading-6 text-muted-foreground shadow-inset">
+        <pre className="rounded-control bg-background px-4 py-2 font-mono text-meta leading-6 text-muted-foreground shadow-inset">
           <span className="text-foreground">pnpm lab new</span> copy-button
         </pre>
       </div>

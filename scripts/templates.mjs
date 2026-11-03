@@ -52,8 +52,8 @@ export function ${pascal(slug)}() {
     <div className="grid place-items-center" style={{ width: ${width}, height: ${height} }}>
       <div className="flex w-[320px] flex-col gap-4 bg-card p-6 shadow-floating" style={{ borderRadius: dial.radius }}>
         <div className="flex flex-col gap-2">
-          <span className="text-[14px] font-medium">${name}</span>
-          <span className="text-[12px] text-muted-foreground">Replace this with the component.</span>
+          <span className="text-title font-medium">${name}</span>
+          <span className="text-meta text-muted-foreground">Replace this with the component.</span>
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-muted">
           {film ? (
@@ -66,7 +66,7 @@ export function ${pascal(slug)}() {
           type="button"
           data-slot="trigger"
           onClick={() => setFull((value) => !value)}
-          className="h-8 rounded-[8px] bg-foreground px-4 text-[14px] font-medium text-background transition-transform duration-150 ease-out active:scale-[0.97]"
+          className="h-8 rounded-control bg-foreground px-4 text-body font-medium text-background transition-transform duration-150 ease-out active:scale-[0.97]"
         >
           {progress > 0.5 ? 'Reset' : 'Fill'}
         </button>
@@ -87,12 +87,12 @@ export function ${pascal(slug)}() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-8 bg-background" style={{ width: ${width}, height: ${height} }}>
-      <label className="flex items-center gap-2 text-[14px] font-medium">
+      <label className="flex items-center gap-2 text-body font-medium">
         <Switch data-slot="detail-switch" checked={on} onCheckedChange={setLive} />
         The detail
       </label>
-      <div className="grid h-[320px] w-[432px] place-items-center rounded-[24px] bg-card shadow-raised">
-        <span className="text-[14px] text-muted-foreground">{on ? 'With the detail' : 'Without the detail'}</span>
+      <div className="grid h-[320px] w-[432px] place-items-center rounded-surface bg-card shadow-raised">
+        <span className="text-body text-muted-foreground">{on ? 'With the detail' : 'Without the detail'}</span>
       </div>
     </div>
   )
@@ -104,12 +104,12 @@ const breakdown = ({ slug, name, width, height }) => `const rows = ['Overview', 
 export function ${pascal(slug)}() {
   return (
     <div className="grid place-items-center" style={{ width: ${width}, height: ${height} }}>
-      <div data-guide-root className="flex w-[320px] flex-col gap-2 rounded-[24px] bg-card p-6 shadow-floating" data-measure="padding gap">
-        <span className="px-2 pb-2 text-[14px] font-medium" data-guide="x">
+      <div data-guide-root className="flex w-[320px] flex-col gap-2 rounded-surface bg-card p-6 shadow-floating" data-measure="padding gap">
+        <span className="px-2 pb-2 text-title font-medium" data-guide="x">
           ${name}
         </span>
         {rows.map((row) => (
-          <div key={row} className="flex h-10 items-center rounded-[8px] px-2 text-[14px] text-muted-foreground hover:bg-muted" data-guide="x" data-measure={row === 'Activity' ? 'height' : undefined}>
+          <div key={row} className="flex h-10 items-center rounded-control px-2 text-body text-muted-foreground hover:bg-muted" data-guide="x" data-measure={row === 'Activity' ? 'height' : undefined}>
             {row}
           </div>
         ))}

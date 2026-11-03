@@ -55,7 +55,7 @@ export function DraftVerdict({ specimen }: { specimen: Specimen }) {
 
   return (
     <div className="flex items-center gap-2">
-      {phase.kind === 'error' && <span className="text-[12px] text-destructive">{phase.message}</span>}
+      {phase.kind === 'error' && <span className="text-meta text-destructive">{phase.message}</span>}
       <Button size="sm" variant="ghost" disabled={phase.kind === 'busy'} onClick={() => setPhase({ kind: 'tossing' })}>
         <XIcon data-icon="inline-start" />
         Toss

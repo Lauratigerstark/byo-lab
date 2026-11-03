@@ -65,7 +65,7 @@ export const specimen = {
     if (cfg.pill) {
       const pill = el('div', 'film-pill absolute left-1/2 flex -translate-x-1/2 gap-0.5 rounded-[10px] bg-muted p-0.5 shadow-inset', camera)
       pill.style.top = `${entry.height + 28}px`
-      for (const option of cfg.pill.options) pillItems.set(option, el('div', 'flex h-7 items-center rounded-[8px] px-3.5 text-[13px] font-medium text-muted-foreground', pill, option))
+      for (const option of cfg.pill.options) pillItems.set(option, el('div', 'flex h-7 items-center rounded-control px-3.5 text-[13px] font-medium text-muted-foreground', pill, option))
       pillHeight = pill.offsetHeight + 28
     }
 
@@ -163,7 +163,7 @@ export const specimen = {
       overlay.replaceChildren()
       for (const [option, node] of pillItems) {
         const active = [...picks].reverse().find((p) => p.t <= t)?.option === option
-        node.className = `flex h-7 items-center rounded-[8px] px-3.5 text-[13px] font-medium ${active ? 'bg-card text-foreground shadow-raised' : 'text-muted-foreground'}`
+        node.className = `flex h-7 items-center rounded-control px-3.5 text-[13px] font-medium ${active ? 'bg-card text-foreground shadow-raised' : 'text-muted-foreground'}`
       }
       if (look.skeleton <= 0.001 && look.guides <= 0.001) return
       const unit = 1.1 / scale

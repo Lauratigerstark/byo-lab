@@ -14,6 +14,8 @@ Every padding, gap, margin, inset, control height and fixed size is a multiple o
 
 The outermost surface of a component has a 24px radius and a 24px inset. Nested radii derive from it (inner = outer − inset) or are picked from the control scale (8 for fields and buttons, 4 for chips and keycaps) once the gap reaches 24.
 
+These are tokens: `rounded-surface` (24), `rounded-control` (8), `rounded-chip` (4). The values live in `--corner-*` in `src/index.css`. Changing this file changes what `pnpm lab grid` expects, so change both together.
+
 ## 3. Safe space and content areas
 
 Lay out in this order, and don't skip ahead:
@@ -29,3 +31,4 @@ Lay out in this order, and don't skip ahead:
 - Per component: at most **three sizes** and **three weights**. Pick from 12, 14, 16, 20, 24, 32, 48 (plus 64 or 96 for a display stat) and from 400, 500, 600.
 - Full-bleed specimens (explainers, bentos) have no outer frame: the 24/24 rule applies to their surfaces and tiles instead.
 - One size and weight per role: title, body, meta. If a fourth role appears, merge it into one of the three.
+- Each role is a token: `text-title` (14), `text-body` (14), `text-meta` (12). The values live in `--type-*` in `src/index.css`, and `text-sm` and `text-xs` follow body and meta so the shared components change with them.

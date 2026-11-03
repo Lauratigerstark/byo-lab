@@ -98,7 +98,7 @@ The files that hold it all:
 
 - **`TASTE.md`** is your rules. It starts with sensible defaults; replace them as you judge work.
 - **`GRID.md`** sets the spacing, radius, and type limits that `pnpm lab grid` checks.
-- **`src/index.css`** holds the theme tokens and elevation scale. Change the look there.
+- **`src/index.css`** holds the theme tokens, elevation scale, radii (`--corner-*`), and text sizes (`--type-*`). Change the look there.
 - **`.agents/skills/`** teaches your agent the workflows. Edit them like any other file.
 - **`LEDGER.md`** appears after your first keep or toss and records every verdict.
 - **`CHANGELOG.md`** is byolab's own release notes. Leave it as is so updates know where you're coming from.
