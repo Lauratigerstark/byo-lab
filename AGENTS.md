@@ -19,7 +19,7 @@ A design lab you build with an agent. It holds:
 - Create work with `pnpm lab new <slug>`. MUST NOT hand-create a draft folder: the command writes the registry entry, component, and film in the shape the lab and renderer expect.
 - New work starts as a draft. Only the owner keeps or tosses it, in the gallery or by asking you to run `pnpm lab keep` / `pnpm lab toss`. MUST NOT judge for them.
 - When the owner gives a crit note, fix it, then add one line to `TASTE.md` as a rule with its reason. A note that stays in the conversation is lost.
-- When a change touches `src/index.css`, `TASTE.md`, or `GRID.md`, run `pnpm lab log <tokens|taste|grid> --what ".." --reason ".."` and stage `LEDGER.md` with it. The pre-commit hook blocks the commit otherwise, because a decision without its why can't be reviewed later. Other commits need no line.
+- When a change touches `src/index.css`, `TASTE.md`, or `GRID.md`, ask the owner whether to include a screenshot of the gallery, then run `pnpm lab log <tokens|taste|grid> --what ".." --reason ".." --shot` (or `--no-shot`) and stage `LEDGER.md`, plus the screenshot in `docs/ledger/` if there is one, with it. The pre-commit hook blocks the commit otherwise, because a decision without its why can't be reviewed later. Other commits need no line.
 - Use `--json` when you need to read a command's result.
 - `pnpm lab grid <slug>` MUST pass before handing work over.
 - Films MUST stay deterministic: state comes from `useFilmFrame()` and the timeline, never `Math.random`, timers, or wall-clock time. `pnpm lab check <film>` MUST pass before a render is called done.
@@ -50,7 +50,7 @@ pnpm lab new <slug> [--kind component|explainer|breakdown] [--name ".."] [--idea
 pnpm lab list [--json]
 pnpm lab keep <slug>
 pnpm lab toss <slug> --reason "one line"
-pnpm lab log <tokens|taste|grid> --what ".." --reason ".."
+pnpm lab log <tokens|taste|grid> --what ".." --reason ".." [--shot|--no-shot]
 pnpm lab grid <slug>
 pnpm lab check <film> [--theme light|dark]
 pnpm lab still <film> <seconds> [--theme light|dark]

@@ -1,10 +1,12 @@
 import { spawnSync } from 'node:child_process'
 import { copyFileSync, existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs'
 import { relative, resolve } from 'node:path'
+import { createInterface } from 'node:readline/promises'
 import { parseArgs } from 'node:util'
 import { root } from './lib.mjs'
 import { KINDS, scaffold } from './templates.mjs'
-import { DESIGN_FILES, keep, logChange, readEntry, SLUG, toss } from './verdict.mjs'
+import { snapshotGallery } from './snapshot.mjs'
+import { checkChange, DESIGN_FILES, keep, logChange, readEntry, SLUG, toss } from './verdict.mjs'
 
 const HELP = `byolab: build UI components with an agent, judge them, and film them.
 
@@ -20,8 +22,9 @@ Judge
   toss <slug> --reason "..."  Bin a draft and add the reason to TASTE.md
 
 Decide
-  log <tokens|taste|grid> --what "..." --reason "..."
-                              Record a design change and why in LEDGER.md
+  log <tokens|taste|grid> --what "..." --reason "..." [--shot|--no-shot]
+                              Record a design change and why in LEDGER.md. Asks whether
+                              to add a screenshot of the gallery to docs/ledger/
 
 Check
   grid <slug>                 Check spacing, radius, and type limits from GRID.md
@@ -55,6 +58,8 @@ const { values: arg, positionals } = parseArgs({
     height: { type: 'string' },
     sheet: { type: 'string' },
     'no-sound': { type: 'boolean' },
+    shot: { type: 'boolean' },
+    'no-shot': { type: 'boolean' },
   },
 })
 
@@ -115,6 +120,15 @@ if (!command || arg.help || command === 'help') {
   process.exit(command || arg.help ? 0 : 2)
 }
 
+// The owner decides whether a change is worth a screenshot. Without a terminal to ask in, the agent must ask them and pass the answer.
+async function askForShot() {
+  if (!process.stdin.isTTY) throw new Error('Ask the owner whether to include a screenshot of the gallery, then pass --shot or --no-shot.')
+  const prompt = createInterface({ input: process.stdin, output: process.stdout })
+  const answer = await prompt.question('Include a screenshot of the gallery? [y/N] ')
+  prompt.close()
+  return /^y(es)?$/i.test(answer.trim())
+}
+
 switch (command) {
   case 'new': {
     const slug = rest[0]
@@ -172,8 +186,11 @@ switch (command) {
   case 'log': {
     if (!rest[0]) fail(`Name what changed: pnpm lab log <${Object.values(DESIGN_FILES).join('|')}> --what "..." --reason "..."`, 2)
     try {
-      const result = logChange(root, rest[0], arg.what, arg.reason)
-      done(result, `Logged a ${result.area} change in LEDGER.md`)
+      checkChange(rest[0], arg.what, arg.reason)
+      const wantShot = arg.shot || arg['no-shot'] ? !!arg.shot : await askForShot()
+      const shot = wantShot ? await snapshotGallery(root, `${new Date().toLocaleDateString('en-CA')}-${rest[0]}`) : undefined
+      const result = logChange(root, rest[0], arg.what, arg.reason, shot)
+      done(result, shot ? `Logged a ${result.area} change in LEDGER.md with a gallery screenshot at ${shot}. Stage both.` : `Logged a ${result.area} change in LEDGER.md`)
     } catch (error) {
       fail(error.message)
     }

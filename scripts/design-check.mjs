@@ -7,9 +7,16 @@ const TOSSED = /^\+- \d{4}-\d{2}-\d{2} tossed `/m
 
 const git = (...args) => execFileSync('git', args, { cwd: resolve(import.meta.dirname, '..'), encoding: 'utf8' })
 
-const design = git('diff', '--cached', '--name-only')
-  .split('\n')
-  .filter((file) => file in DESIGN_FILES)
+const staged = git('diff', '--cached', '--name-only').split('\n')
+const design = staged.filter((file) => file in DESIGN_FILES)
+
+const shots = [...git('diff', '--cached', '--', 'LEDGER.md').matchAll(/^\+- .* !\[[^\]]*\]\(([^)]+)\)$/gm)].map((match) => match[1])
+const missing = shots.filter((shot) => !staged.includes(shot))
+if (missing.length) {
+  console.error(`LEDGER.md links screenshots that aren't staged: ${missing.join(', ')}\n`)
+  console.error(`  git add ${missing.join(' ')}\n`)
+  process.exit(1)
+}
 
 if (design.length) {
   const added = git('diff', '--cached', '--', 'LEDGER.md')
