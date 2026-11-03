@@ -4,7 +4,7 @@ import { everything, isDraft, type Specimen } from '@/specimens'
 import { kindOrder, kinds, type Kind } from '@/specimens/kinds'
 import { cn } from '@/lib/utils'
 import { FitFrame } from './fit-frame'
-import { ThemeToggle } from './chrome'
+import { LabHeader } from './chrome'
 import { DraftVerdict } from './draft-verdict'
 import { KindMenu, type KindFilter } from './kind-menu'
 
@@ -121,13 +121,9 @@ export function Gallery() {
 
   return (
     <div className="min-h-dvh">
-      <header className="mx-auto flex max-w-[1280px] items-center gap-4 px-8 pt-8 pb-8">
-        <h1 className="text-[15px] font-semibold tracking-[-0.01em]">Lab</h1>
+      <LabHeader>
         <KindMenu value={filter} counts={counts} onChange={choose} />
-        <div className="ml-auto flex items-center gap-2">
-          <ThemeToggle />
-        </div>
-      </header>
+      </LabHeader>
       <main className="mx-auto flex max-w-[1280px] flex-col gap-12 px-8 pb-16">
         {everything.length ? (
           <>

@@ -9,6 +9,8 @@ export function useRoute() {
   const hash = useSyncExternalStore(subscribeHash, () => location.hash)
   const [, page, slug] = hash.replace(/^#\/?/, '/').split('/')
   if (page === 's' && slug) return { page: 'specimen' as const, slug }
+  if (page === 'system') return { page: 'system' as const }
+  if (page === 'designevolution') return { page: 'evolution' as const }
   return { page: 'gallery' as const }
 }
 

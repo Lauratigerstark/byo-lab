@@ -4,7 +4,7 @@ import { relative, resolve } from 'node:path'
 import { parseArgs } from 'node:util'
 import { root } from './lib.mjs'
 import { KINDS, scaffold } from './templates.mjs'
-import { keep, readEntry, SLUG, toss } from './verdict.mjs'
+import { DESIGN_FILES, keep, logChange, readEntry, SLUG, toss } from './verdict.mjs'
 
 const HELP = `byolab: build UI components with an agent, judge them, and film them.
 
@@ -19,6 +19,10 @@ Judge
   keep <slug>                 Move a draft into src/specimens and log it in LEDGER.md
   toss <slug> --reason "..."  Bin a draft and add the reason to TASTE.md
 
+Decide
+  log <tokens|taste|grid> --what "..." --reason "..."
+                              Record a design change and why in LEDGER.md
+
 Check
   grid <slug>                 Check spacing, radius, and type limits from GRID.md
   check <film> [--theme light|dark]
@@ -32,8 +36,9 @@ Film
   export <film> [--theme light|dark|both] [--height 2160] [--no-sound]
                               Render and copy the finished videos to exports/<film>/
 
-Add --json to new, list, keep, toss, and export for machine-readable output.
-The lab runs at http://localhost:5420 (pnpm dev). Films play at /film.html?film=<film>.`
+Add --json to new, list, keep, toss, log, and export for machine-readable output.
+The lab runs at http://localhost:5420 (pnpm dev). Films play at /film.html?film=<film>.
+The design system is at #/system and its history at #/designevolution.`
 
 const { values: arg, positionals } = parseArgs({
   allowPositionals: true,
@@ -44,6 +49,7 @@ const { values: arg, positionals } = parseArgs({
     name: { type: 'string' },
     idea: { type: 'string' },
     size: { type: 'string' },
+    what: { type: 'string' },
     reason: { type: 'string' },
     theme: { type: 'string' },
     height: { type: 'string' },
@@ -157,6 +163,17 @@ switch (command) {
     try {
       const result = toss(root, rest[0], arg.reason ?? rest.slice(1).join(' '))
       done(result, `Tossed ${result.slug} to ${result.tossed}. Reason added to TASTE.md.`)
+    } catch (error) {
+      fail(error.message)
+    }
+    break
+  }
+
+  case 'log': {
+    if (!rest[0]) fail(`Name what changed: pnpm lab log <${Object.values(DESIGN_FILES).join('|')}> --what "..." --reason "..."`, 2)
+    try {
+      const result = logChange(root, rest[0], arg.what, arg.reason)
+      done(result, `Logged a ${result.area} change in LEDGER.md`)
     } catch (error) {
       fail(error.message)
     }
